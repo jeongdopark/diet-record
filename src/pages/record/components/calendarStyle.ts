@@ -32,7 +32,9 @@ export const CalendarTable = styled.tbody`
 
 export const CalendarElement = styled.tr`
   width: 100px;
-  height: 100px;
+  height: 20px;
+  margin-bottom: 30px;
+  padding: 5px;
 `
 
 export const CalendarWeekContainer = styled.div`
@@ -48,4 +50,54 @@ export const CalendarWeekElement = styled.div`
   display: flex;
   justify-content: space-around;
   color: rgba(0, 0, 0, 0.6);
+`
+
+export const CalendarTd = styled.td`
+  border-radius: 5px;
+  width: 100px;
+  height: 100px;
+  padding: 5px;
+  &:hover {
+    border-radius: 10px;
+    transition: ease-in-out 0.3s;
+    box-shadow: 1px 1px 20px #ddd;
+  }
+`
+
+export const NotWeek = styled(CalendarTd)`
+  background-color: #e2e2e2;
+  opacity: 0.4;
+`
+
+export const CalendarRecordElementWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 8px;
+`
+
+export const CalendarRecordElement = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  div {
+    width: 5px;
+    height: 5px;
+    background-color: #007fff;
+    border-radius: 50%;
+  }
+
+  li {
+    margin-left: 8px;
+  }
+`
+
+export const CalendarTodayElement = styled(CalendarRecordElement)`
+  div {
+    background-color: white;
+  }
+  li {
+    color: white;
+  }
 `
