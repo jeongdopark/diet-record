@@ -82,7 +82,6 @@ const Calendar = () => {
                         {Object.keys(
                           recordData[String(days.format('YYYYMMDD').slice(2))],
                         ).map((e: any) => {
-                          console.log(e, '1')
                           return (
                             <CalendarRecordElementWrapper key={e}>
                               <CalendarTodayElement>
@@ -120,7 +119,6 @@ const Calendar = () => {
                         {Object.keys(
                           recordData[String(days.format('YYYYMMDD').slice(2))],
                         ).map((e: any) => {
-                          console.log(e, '2')
                           return (
                             <CalendarRecordElementWrapper key={e}>
                               <CalendarRecordElement>
