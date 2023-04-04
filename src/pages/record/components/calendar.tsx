@@ -22,14 +22,14 @@ import {
   onSnapshot,
 } from 'firebase/firestore'
 
-interface RecordType {
+export interface RecordType {
   [key: string]: ExerciseCount
 }
 
-interface ExerciseCount {
+export interface ExerciseCount {
   [key: string]: ExerciseType
 }
-interface ExerciseType {
+export interface ExerciseType {
   exercise_category: string
   exercise_start_time: string
   exercise_end_time: string
@@ -40,9 +40,8 @@ const Calendar = () => {
   const today = getMoment
   const navigate = useNavigate()
 
-  const onClickDate = (e: any) => {
-    const params = today.format('YYMM') + e.target.childNodes[0].innerText
-    navigate(`/record/${params}`)
+  const onClickDate = (date: string, data_obj: ExerciseCount) => {
+    navigate(`/record/${date}`, { state: data_obj })
   }
   const [recordData, setRecordData] = useState<RecordType | undefined>({})
 
@@ -74,7 +73,12 @@ const Calendar = () => {
                   undefined ? (
                     <CalendarTd
                       key={index}
-                      onClick={onClickDate}
+                      onClick={() =>
+                        onClickDate(
+                          days.format('YYYYMMDD').slice(2),
+                          recordData[String(days.format('YYYYMMDD').slice(2))],
+                        )
+                      }
                       style={{ backgroundColor: '#007fff' }}
                     >
                       <CalendarElement>{days.format('D')}</CalendarElement>
@@ -102,7 +106,12 @@ const Calendar = () => {
                   ) : (
                     <CalendarTd
                       key={index}
-                      onClick={onClickDate}
+                      onClick={() =>
+                        onClickDate(
+                          days.format('YYYYMMDD').slice(2),
+                          recordData[String(days.format('YYYYMMDD').slice(2))],
+                        )
+                      }
                       style={{ backgroundColor: '#007fff' }}
                     >
                       <CalendarElement>{days.format('D')}</CalendarElement>
@@ -113,7 +122,15 @@ const Calendar = () => {
                 return recordData !== undefined ? (
                   recordData[String(days.format('YYYYMMDD').slice(2))] !==
                   undefined ? (
-                    <NotWeek key={index} onClick={onClickDate}>
+                    <NotWeek
+                      key={index}
+                      onClick={() =>
+                        onClickDate(
+                          days.format('YYYYMMDD').slice(2),
+                          recordData[String(days.format('YYYYMMDD').slice(2))],
+                        )
+                      }
+                    >
                       <CalendarElement>{days.format('D')}</CalendarElement>
                       <ul style={{ marginTop: '5px' }}>
                         {Object.keys(
@@ -137,7 +154,15 @@ const Calendar = () => {
                       </ul>
                     </NotWeek>
                   ) : (
-                    <NotWeek key={index} onClick={onClickDate}>
+                    <NotWeek
+                      key={index}
+                      onClick={() =>
+                        onClickDate(
+                          days.format('YYYYMMDD').slice(2),
+                          recordData[String(days.format('YYYYMMDD').slice(2))],
+                        )
+                      }
+                    >
                       <CalendarElement>{days.format('D')}</CalendarElement>
                     </NotWeek>
                   )
@@ -146,7 +171,15 @@ const Calendar = () => {
                 return recordData !== undefined ? (
                   recordData[String(days.format('YYYYMMDD').slice(2))] !==
                   undefined ? (
-                    <CalendarTd key={index} onClick={onClickDate}>
+                    <CalendarTd
+                      key={index}
+                      onClick={() =>
+                        onClickDate(
+                          days.format('YYYYMMDD').slice(2),
+                          recordData[String(days.format('YYYYMMDD').slice(2))],
+                        )
+                      }
+                    >
                       <CalendarElement>{days.format('D')}</CalendarElement>
                       <ul style={{ marginTop: '5px' }}>
                         {Object.keys(
@@ -170,7 +203,15 @@ const Calendar = () => {
                       </ul>
                     </CalendarTd>
                   ) : (
-                    <CalendarTd key={index} onClick={onClickDate}>
+                    <CalendarTd
+                      key={index}
+                      onClick={() =>
+                        onClickDate(
+                          days.format('YYYYMMDD').slice(2),
+                          recordData[String(days.format('YYYYMMDD').slice(2))],
+                        )
+                      }
+                    >
                       <CalendarElement>{days.format('D')}</CalendarElement>
                     </CalendarTd>
                   )
@@ -185,6 +226,7 @@ const Calendar = () => {
 
   useEffect(() => {
     const unsub = onSnapshot(doc(db, 'user_data', '2656770278'), (doc) => {
+      console.log(doc.data())
       setRecordData(doc.data())
     })
   }, [])
