@@ -11,7 +11,6 @@ import RecordBox from './components/RecordBox'
 
 const RecordDetail = () => {
   const location = useLocation()
-  console.log(location)
   return (
     <RecordDetailContainer>
       <ExerciseWrapper>
