@@ -1,8 +1,19 @@
 import React from 'react'
 import AppRouter from './routes'
+import {
+  RecoilRoot,
+  atom,
+  selector,
+  useRecoilState,
+  useRecoilValue,
+} from 'recoil'
 
 function App() {
-  return <AppRouter />
+  return (
+    <RecoilRoot>
+      <AppRouter />
+    </RecoilRoot>
+  )
 }
 
 export default App

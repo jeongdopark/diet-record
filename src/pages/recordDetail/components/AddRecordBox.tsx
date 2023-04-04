@@ -1,4 +1,5 @@
 import React, { ReactElement, useState } from 'react'
+
 import {
   ExerciseElement,
   InputSpan,
@@ -24,7 +25,6 @@ const AddRecordBox = () => {
   const [endMinute, setEndMinute] = useState<string>('00')
   const [inputValue, setInputValue] = useState<string>('')
   const { id: date } = useParams()
-  console.log(date)
 
   const onChangeStartHour = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStartHour(e.currentTarget.value)
@@ -44,9 +44,9 @@ const AddRecordBox = () => {
 
   const onClickAddBtn = async () => {
     const testRef = doc(db, 'user_data', '2656770278')
-
+    setDoc(testRef, { capital: true }, { merge: true })
     await updateDoc(testRef, {
-      230403: arrayUnion({
+      [date!]: arrayUnion({
         exercise_category: inputValue,
         exercise_end_time: `${endHour}:${endMinute}`,
         exercise_start_time: `${startHour}:${startMinute}`,

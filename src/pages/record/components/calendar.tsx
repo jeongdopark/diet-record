@@ -1,5 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import moment from 'moment'
+import { useRecoilState } from 'recoil'
+import { recordState } from '../../../recoil/atoms/recordState'
 import {
   CalendarContainer,
   CalendarControl,
@@ -23,12 +25,9 @@ import {
 } from 'firebase/firestore'
 
 export interface RecordType {
-  [key: string]: ExerciseCount
+  [key: string]: ExerciseType[]
 }
 
-export interface ExerciseCount {
-  [key: string]: ExerciseType
-}
 export interface ExerciseType {
   exercise_category: string
   exercise_start_time: string
@@ -40,10 +39,12 @@ const Calendar = () => {
   const today = getMoment
   const navigate = useNavigate()
 
-  const onClickDate = (date: string, data_obj: ExerciseCount) => {
+  const onClickDate = (date: string, data_obj: ExerciseType) => {
     navigate(`/record/${date}`, { state: data_obj })
   }
-  const [recordData, setRecordData] = useState<RecordType | undefined>({})
+  const [recordData, setRecordData] = useRecoilState<any | undefined>(
+    recordState,
+  )
 
   const firstWeek = today.clone().startOf('month').week()
   const lastWeek =
@@ -230,6 +231,7 @@ const Calendar = () => {
       setRecordData(doc.data())
     })
   }, [])
+
   return (
     <CalendarContainer>
       <CalendarControl>
